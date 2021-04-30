@@ -1,0 +1,156 @@
+2021-04-03 2:43:37 - 
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/system/library/template/twig.php
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/system/library/template/twig.php
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: admin/controller/common/column_left.php
+CODE: $this->load->language('common/column_left');
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: admin/view/template/common/column_left.tpl
+CODE: <div id="stats">
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/admin/view/template/common/column_left.twig
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: admin/controller/tool/backup.php
+CODE: $this->db->query(substr($sql, 0, strlen($sql) -2));
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: admin/controller/tool/backup.php
+CODE: if (substr($line, 0, 14) == 'TRUNCATE TABLE' || substr($line, 0, 11) == 'INSERT INTO') {
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/admin/view/template/tool/backup.twig
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/model/tool/image.php
+CODE: return $this->config->get('config_ssl') . 'image/' . $image_new;
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/model/tool/image.php
+CODE: (int)$height
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/controller/product/product.php
+CODE: $data['popup'] = $this->model_tool_image->resize($product_info['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height'));
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/catalog/controller/common/seo_url.php
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: admin/controller/common/filemanager.php
+CODE: realpath($directory . '/' . $filter_name))
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: admin/view/template/common/filemanager.tpl
+CODE: <?php } else { ?>
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/admin/view/template/common/filemanager.twig
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/controller/common/maintenance.php
+CODE: if (($route != 'payment' && $route != 'api') && !$this->user->isLogged()) {
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/controller/startup/maintenance.php
+CODE: if ((substr($route, 0, 7) != 'payment' && substr($route, 0, 3) != 'api') && !in_array($route, $ignore) && !$this->user->isLogged()) {
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/controller/startup/maintenance.php
+CODE: if ((substr($route, 0, 17) != 'extension/payment' && substr($route, 0, 3) != 'api') && !in_array($route, $ignore) && !$this->user->isLogged()) {
+MOD: Journal2
+
+ERROR: CODE NOT FOUND!
+FILE: system/library/template.php
+CODE: $this->adaptor = new $class();
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/admin/controller/extension/extension/module.php
+MOD: Journal2
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/admin/language/pt-br/sale/order.php
+MOD: <font color="#0000"><b>Display Image Product</font>
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/journal2/template/checkout/confirm.tpl
+CODE: <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+MOD: <font color="#0000"><b>Display Image Product</font>
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/common/cart.tpl
+CODE: <td class="text-center remove"><button type="button" onclick="cart.remove('<?php echo $product[version_compare(VERSION, '2.1', '<') ? 'key' : 'cart_id']; ?>');" title="<?php echo $button_remove; ?>" class=""><i class=""></i></button></td>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/common/header.tpl
+CODE: <?php $this->journal2->minifier->addScript('catalog/view/theme/journal2/js/journal.js', 'header'); ?>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/product/product.tpl
+CODE: <button type="button" id="button-cart" data-loading-text="<?php echo $text_loading; ?>" class="button"><span class="button-cart-text"><?php echo $button_cart; ?></span></button>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/journal2/template/product/product.tpl
+CODE: $('#cart-total').html(json['item-count']);
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/product/category.tpl
+CODE: <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button hint--top" data-hint="<?php echo $button_cart; ?>"><i class="button-left-icon"></i><span class="button-cart-text"><?php echo $button_cart; ?></span><i class="button-right-icon"></i></a>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/product/special.tpl
+CODE: <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button hint--top" data-hint="<?php echo $button_cart; ?>"><i class="button-left-icon"></i><span class="button-cart-text"><?php echo $button_cart; ?></span><i class="button-right-icon"></i></a>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/product/manufacturer_info.tpl
+CODE: <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button hint--top" data-hint="<?php echo $button_cart; ?>"><i class="button-left-icon"></i><span class="button-cart-text"><?php echo $button_cart; ?></span><i class="button-right-icon"></i></a>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/default/template/product/search.tpl
+CODE: <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button hint--top" data-hint="<?php echo $button_cart; ?>"><i class="button-left-icon"></i><span class="button-cart-text"><?php echo $button_cart; ?></span><i class="button-right-icon"></i></a>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/journal2/template/journal2/module/custom_sections_product.tpl
+CODE: <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button hint--top" data-hint="<?php echo $button_cart; ?>"><i class="button-left-icon"></i><span class="button-cart-text"><?php echo $button_cart; ?></span><i class="button-right-icon"></i></a>
+MOD: Go_To_Cart
+
+ERROR: CODE NOT FOUND!
+FILE: catalog/view/theme/journal2/template/journal2/quickview/quickview.tpl
+CODE: $('#cart-total').html(json['item-count']);
+MOD: Go_To_Cart
+
+ERROR: FILE NOT FOUND!
+FILE: /mnt/data/home/342514.cloudwaysapps.com/aujqzbrejf/public_html/system/library/cart.php
+MOD: PersistentCart patch-1 by iSenseLabs

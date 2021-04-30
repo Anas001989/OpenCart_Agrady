@@ -1,0 +1,154 @@
+<modification>
+	<name>PersistentCart patch-1 by iSenseLabs</name>
+	<version>2.4.4-p1</version>
+	<link>http://isenselabs.com</link>
+	<author>iSenseLabs</author>
+	<code>isenselabs_persistentcart_patch1</code>
+	<file path="system/library/cart.php|system/library/cart/cart.php">
+		<operation>
+			<search><![CDATA[class Cart {]]></search>
+			<add position="after"><![CDATA[
+	public function getVisitorIp() {
+		$ip = (!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : '';
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+	
+		} else if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) { 
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		}
+	
+		return $ip;
+	}
+
+    public function findAndRecoverPersistentCartIfEnabled() {
+        // Not invoking PersistentCart for admin cart manipulations
+        if (!empty($_GET['token']) || !empty($this->session->data['token']) || !empty($this->session->data['user_id'])) {
+            return;
+        }
+
+      $pc_config = $this->getSetting('PersistentCart', $this->config->get('config_store_id'));
+	  if (empty($pc_config['PersistentCart'])) {
+		return false;
+	  }
+      $pc_config = $this->getPcConfig();
+	  if (!$pc_config) {
+		return false;
+	  }
+
+	  //If the module is enabled and if the customer is not logged in
+      if ($pc_config['Enabled']=='yes' && (int)$this->customer->getId() == 0) {
+
+		// If persistence by IP is enabled, we will look for such cart and recover it
+		if ($pc_config['Method']=='ip' || $pc_config['Method']=='cookies_ip') {
+
+			// Look for a stored cart from the visitor IP
+			$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE visitor_ip = '" . $this->getVisitorIp() . "'");
+			
+			// If this IP has a stored cart
+			if ($cart_query->num_rows) {
+				
+				// Recover this cart
+				foreach ($cart_query->rows as $cart) {
+					$this->db->query("UPDATE " . DB_PREFIX . "cart SET session_id = '" . $this->db->escape($this->session->getId()) . "', customer_id=0 WHERE cart_id = '" . (int)$cart['cart_id'] . "'");
+				}
+
+			}
+		}
+
+ 		// If persistence by Cookies is enabled, and there is cart cookie set, we will look for such cart and recover it 
+		if (strpos($this->getPcConfig('Method'),'cookies') !== false && (!empty($_COOKIE['pc_cookie'])) && $_COOKIE['pc_cookie'] != $this->session->getId()) {
+
+			// Look for a stored cart from the visitor IP
+			$cart_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "cart WHERE session_id = '" . $_COOKIE['pc_cookie'] . "'");
+			
+			// If this session exist as stored cart
+			if ($cart_query->num_rows) {
+
+				// Recover this cart
+				foreach ($cart_query->rows as $cart) {
+					$this->db->query("UPDATE " . DB_PREFIX . "cart SET session_id = '" . $this->db->escape($this->session->getId()) . "', customer_id=0 WHERE session_id = '" . $this->db->escape($_COOKIE['pc_cookie']) . "'");
+				}
+
+                
+                setcookie("pc_cookie", $this->session->getId(), strtotime('+'.$this->getPcConfig('Limit').' days'), '/');
+
+
+			}
+		}
+
+      }
+    }
+
+
+	public function getSetting($code, $store_id = 0) {
+		$data = array();
+
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `code` = '" . $this->db->escape($code) . "'");
+
+		foreach ($query->rows as $result) {
+			if (!$result['serialized']) {
+				$data[$result['key']] = $result['value'];
+			} else {
+				$data[$result['key']] = json_decode($result['value'], true);
+			}
+		}
+
+		return $data;
+	}
+
+	public function getPcConfig($key='') {
+      $pc_config = $this->getSetting('PersistentCart', $this->config->get('config_store_id'));
+	  if (empty($pc_config['PersistentCart'])) {
+		return false;
+	  }
+      $pc_config = $pc_config['PersistentCart'];
+	  if (empty($key)) { 
+	  	return $pc_config;
+	  } else {
+		 if (empty($pc_config[$key])) {
+			return false; 
+		 } else {
+			 return $pc_config[$key];
+		 }
+	  } 
+	}
+			]]></add>
+		</operation>
+        <operation>
+          <search><![CDATA[date_added = NOW()"]]></search>
+          <add position="replace"><![CDATA[date_added = NOW(), visitor_ip='" . $this->getVisitorIp()."'"]]></add>
+        </operation>
+        <operation>
+          <search index="0"><![CDATA[if ($this->customer->getId()) {]]></search>
+          <add position="before"><![CDATA[		
+		if (empty($_GET['token'])){ // Not invoking PersistentCart for admin cart manipulations
+			$this->findAndRecoverPersistentCartIfEnabled();
+		}
+]]></add>
+        </operation>
+        <operation>
+          <search index="0"><![CDATA[public function add]]></search>
+          <add position="after"><![CDATA[ 
+		  // If PersistentCart is enabled and is set to use cookies to store carts
+          if ($this->getPcConfig('Enabled') == 'yes' && empty($_GET['token']) && empty($this->session->data['token']) && strpos($this->getPcConfig('Method'),'cookies') !== false) {
+			setcookie("pc_cookie", $this->session->getId(), strtotime('+'.$this->getPcConfig('Limit').' days'), '/');
+		  }
+
+]]></add>
+        </operation>
+        <operation>
+          <search index="0"><![CDATA[INTERVAL ]]></search>
+          <add position="before"><![CDATA[ 
+		  $interval = "INTERVAL 1 HOUR";
+		  if ($this->getPcConfig('Enabled') == 'yes') {
+			$interval = "INTERVAL " . (int)$this->getPcConfig('Limit')  . " DAY";
+		  }
+
+]]></add>
+        </operation>
+        <operation>
+          <search index="1"><![CDATA[INTERVAL 1 HOUR]]></search>
+          <add position="replace"><![CDATA[$interval]]></add>
+        </operation>
+	</file> 
+</modification>
